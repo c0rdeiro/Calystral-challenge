@@ -6,6 +6,7 @@
   "author": "Francisco Cordeiro <franciscordeiro99@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "dev": "ts-node-dev --respawn --pretty --transpile-only src/app.ts",
     "test": "yarn lint:types && jest --no-cache",
     "lint": "yarn lint:types && yarn lint:ci",
     "lint:types": "yarn tsc --noEmit -p .",
@@ -24,6 +25,7 @@
     "eslint-plugin-import": "^2.21.1",
     "jest": "^26.0.1",
     "ts-jest": "^26.1.0",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^3.9.5"
   }
 }
