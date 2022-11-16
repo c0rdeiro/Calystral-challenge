@@ -1,7 +1,7 @@
 import { hash, verify } from 'argon2'
 import { NextFunction, Request, Response } from 'express'
 import { sign } from 'jsonwebtoken'
-import { users } from '../services/user.service'
+import { Users } from '../database/user.database'
 
 export async function register(
   req: Request,
@@ -10,13 +10,13 @@ export async function register(
 ) {
   try {
     const user: CustomUser = req.body
-    const exists = !!users.find((u) => user.username === u.username)
+    const exists = !!Users.find((u) => user.username === u.username)
     if (exists) {
       res.status(400).send('User already exists')
       return
     }
     user.password = await hash(user.password) //should have salt in a real scenario
-    users.push(user)
+    Users.push(user)
 
     res.status(201).send()
   } catch (error) {
@@ -33,7 +33,7 @@ export async function authenticate(
     const JWT_SECRET: string = 'd68a2e6365f0fd1f9c46c2e65c77ec87' //should be in the .env file, here for simplicity
     const reqUser: User = req.body
 
-    const user: CustomUser | undefined = users.find(
+    const user: CustomUser | undefined = Users.find(
       (u) => u.username === reqUser.username
     )
 
