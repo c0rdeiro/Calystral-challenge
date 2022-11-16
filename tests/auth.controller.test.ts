@@ -3,8 +3,6 @@ import request from 'supertest'
 import app from '../src/app'
 
 describe('Auth Controller', () => {
-  const JWT_SECRET: string = 'd68a2e6365f0fd1f9c46c2e65c77ec87' //should be in the .env file, here for simplicity
-
   it('should be able to register new user', async () => {
     const response = await request(app).post('/api/auth/register').send({
       username: 'Francisco',
@@ -21,7 +19,7 @@ describe('Auth Controller', () => {
       password: '1234',
     })
 
-    const token = verify(response.body, JWT_SECRET)
+    const token = verify(response.body, process.env.JWT_SECRET!)
     expect((token as JwtPayload).username).toBe('Francisco')
   })
 })

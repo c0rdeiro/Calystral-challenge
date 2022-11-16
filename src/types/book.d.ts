@@ -1,7 +1,8 @@
 type Book = {
+  id?: string
   title: string
   description: string
-  author: CustomUser
+  author: User
   coverImage: string
   price: number
 }

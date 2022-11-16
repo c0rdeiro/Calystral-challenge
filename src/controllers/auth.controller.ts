@@ -9,7 +9,7 @@ export async function register(
   next: NextFunction
 ) {
   try {
-    const user: CustomUser = req.body
+    const user: User = req.body
     const exists = !!Users.find((u) => user.username === u.username)
     if (exists) {
       res.status(400).send('User already exists')
@@ -30,10 +30,9 @@ export async function authenticate(
   next: NextFunction
 ) {
   try {
-    const JWT_SECRET: string = 'd68a2e6365f0fd1f9c46c2e65c77ec87' //should be in the .env file, here for simplicity
     const reqUser: User = req.body
 
-    const user: CustomUser | undefined = Users.find(
+    const user: User | undefined = Users.find(
       (u) => u.username === reqUser.username
     )
 
@@ -45,8 +44,8 @@ export async function authenticate(
     verify(user.password, reqUser.password)
 
     const token = await sign(
-      { username: user.username, authorPseudonym: user.authorPseudonym },
-      JWT_SECRET,
+      { username: user.username },
+      process.env.JWT_SECRET!,
       {
         algorithm: 'HS256',
         expiresIn: '12h',

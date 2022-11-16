@@ -1,8 +1,17 @@
 import { Router } from 'express'
-import { getAllBooks } from '../controllers/book.controller'
+import {
+  createBook,
+  getAllBooks,
+  unpublishBook,
+  updateBook,
+} from '../controllers/book.controller'
 
 const bookRouter = Router()
 
 bookRouter.get('/', getAllBooks)
+
+bookRouter.post('/', createBook)
+bookRouter.put('/:id', updateBook)
+bookRouter.delete('/:id', unpublishBook)
 
 export default bookRouter
