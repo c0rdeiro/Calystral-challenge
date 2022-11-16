@@ -24,7 +24,7 @@ export const getAllBooks = (
           (b) =>
             b.title.includes(title) &&
             b.description.includes(description) &&
-            (price ? b.price <= price : undefined)
+            (price ? b.price <= price : true)
         )
       )
   } catch (error) {
