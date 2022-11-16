@@ -5,13 +5,14 @@ import {
   unpublishBook,
   updateBook,
 } from '../controllers/book.controller'
+import authMiddleware from '../middleware/auth.middleware'
 
 const bookRouter = Router()
 
 bookRouter.get('/', getAllBooks)
 
-bookRouter.post('/', createBook)
-bookRouter.put('/:id', updateBook)
-bookRouter.delete('/:id', unpublishBook)
+bookRouter.post('/', authMiddleware, createBook)
+bookRouter.put('/:id', authMiddleware, updateBook)
+bookRouter.delete('/:id', authMiddleware, unpublishBook)
 
 export default bookRouter

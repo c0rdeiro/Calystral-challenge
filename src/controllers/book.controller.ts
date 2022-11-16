@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
 import { Books } from '../database/book.database'
 import { v4 as uuid } from 'uuid'
+import { verify } from 'jsonwebtoken'
 
 export const getAllBooks = (
   req: Request,
@@ -71,11 +72,18 @@ export const unpublishBook = (
   try {
     const bookIndex = Books.findIndex((b) => b.id === req.params.id)
 
-    if (!bookIndex) {
+    if (bookIndex === -1) {
       return res.status(404).send()
     }
 
-    //TODO: only owners can delete
+    const jwt = verify(
+      req.headers.authorization!.split(' ')[1],
+      process.env.JWT_SECRET!
+    )
+
+    if ((jwt as User).username !== Books[bookIndex].author.username) {
+      return res.status(403).send('Not enough permissions')
+    }
 
     Books.splice(bookIndex, 1)
 
