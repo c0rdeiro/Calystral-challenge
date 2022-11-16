@@ -1,5 +1,3 @@
-import { hash } from 'argon2'
-
 // in memory users
 export const Users: CustomUser[] = [
   {
