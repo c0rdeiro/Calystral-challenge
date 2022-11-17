@@ -51,9 +51,8 @@ export const createBook = (req: Request, res: Response, next: NextFunction) => {
 export const updateBook = (req: Request, res: Response, next: NextFunction) => {
   try {
     const bookIndex = Books.findIndex((b) => b.id === req.params.id)
-    if (!bookIndex) {
-      res.status(404).send()
-      return
+    if (bookIndex === -1) {
+      return res.status(404).send()
     }
     const updatedBook = { id: req.params.id, ...req.body }
     Books.splice(bookIndex, 1, updatedBook)

@@ -5,7 +5,7 @@ import app from '../src/app'
 describe('Auth Controller', () => {
   it('should be able to register new user', async () => {
     const response = await request(app).post('/api/auth/register').send({
-      username: 'Francisco',
+      username: 'someoneNew',
       password: '1234',
       authorPseudonym: 'fc',
     })
